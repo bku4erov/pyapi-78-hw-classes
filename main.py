@@ -107,74 +107,75 @@ class Reviewer(Mentor):
             return 'Ошибка'
 
 
-best_student = Student('Ruoy', 'Eman', 'male')
-best_student.courses_in_progress += ['Python']
-best_student.courses_in_progress += ['Git']
-best_student.finished_courses += ['Введение в программирование']
+# Create 2 instances of each class
 
-cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += ['Python']
+# Create 2 instances of class Student
+student_1 = Student('Ruoy', 'Eman', 'male')
+student_1.courses_in_progress += ['Python']
+student_1.courses_in_progress += ['Git']
+student_1.finished_courses += ['Введение в программирование']
 
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
+student_2 = Student('Jenny', 'Smith', 'female')
+student_2.courses_in_progress += ['Python']
+student_2.courses_in_progress += ['JavaScript']
+student_2.finished_courses += ['Введение в программирование']
 
-print(best_student.grades)
+# Create 2 instances of class Reviewer
+reviewer_1 = Reviewer('Some', 'Buddy')
+reviewer_1.courses_attached += ['Python']
 
-lecturer_a = Lecturer('John', 'Smith')
-lecturer_a.courses_attached += ['Python', 'Git']
+reviewer_2 = Reviewer('Helen', 'Green')
+reviewer_2.courses_attached += ['Git']
+reviewer_2.courses_attached += ['JavaScript']
 
-best_student.rate_lecture(lecturer_a, 'Python', 10)
-best_student.rate_lecture(lecturer_a, 'Python', 10)
+# Create 2 instances of class Lecturer
+lecturer_1 = Lecturer('John', 'Smith')
+lecturer_1.courses_attached += ['Python', 'Git']
 
-lecturer_b = Lecturer('Ivan', 'Ivanov')
-lecturer_b.courses_attached += ['Python', 'Введение в программирование']
+lecturer_2 = Lecturer('Ivan', 'Ivanov')
+lecturer_2.courses_attached += ['Python', 'JavaScript']
 
-best_student.rate_lecture(lecturer_b, 'Python', 10)
-best_student.rate_lecture(lecturer_b, 'Python', 9)
+# Create 2 instances of class Mentor
+mentor_1 = Mentor('Petr', 'Petrov')
+mentor_1.courses_attached += ['Python']
 
-lecturer_c = Lecturer('Petr', 'Petrov')
-lecturer_c.courses_attached += ['Python']
+mentor_2 = Mentor('John', 'Brown')
+mentor_2.courses_attached += ['Git']
 
-best_student.rate_lecture(lecturer_c, 'Python', 10)
-best_student.rate_lecture(lecturer_c, 'Python', 10)
 
-another_student = Student('Jenny', 'Smith', 'female')
-another_student.courses_in_progress += ['Python']
-another_student.finished_courses += ['Введение в программирование']
+# Call all created methods of the classes
 
-cool_reviewer.rate_hw(another_student, 'Python', 10)
-cool_reviewer.rate_hw(another_student, 'Python', 9)
-cool_reviewer.rate_hw(another_student, 'Python', 10)
+# Call Student's method to rate lectures
+student_1.rate_lecture(lecturer_1, 'Python', 10)
+student_1.rate_lecture(lecturer_1, 'Git', 10)
+student_1.rate_lecture(lecturer_2, 'Python', 10)
+student_2.rate_lecture(lecturer_1, 'Python', 10)
+student_2.rate_lecture(lecturer_2, 'Python', 9)
+student_2.rate_lecture(lecturer_2, 'JavaScript', 10)
 
-print(lecturer_a.grades)
-print()
+# Call Reviewer's method to rate student's homework
+reviewer_1.rate_hw(student_1, 'Python', 10)
+reviewer_1.rate_hw(student_1, 'Python', 10)
+reviewer_1.rate_hw(student_2, 'Python', 10)
+reviewer_1.rate_hw(student_2, 'Python', 9)
+reviewer_2.rate_hw(student_1, 'Git', 10)
+reviewer_2.rate_hw(student_2, 'JavaScript', 10)
 
-print('Сведения о проверяющем:')
-print(cool_reviewer)
-print()
+# Call overloaded __str__method of all clases
+# also protected method to calculate mean grade will be called from __str__ method
+print(student_1)
+print(student_2)
+print(lecturer_1)
+print(lecturer_2)
+print(reviewer_1)
+print(reviewer_2)
+print(mentor_1)
+print(mentor_2)
 
-print('Сведения о лекторе:')
-print(lecturer_a)
-print()
-
-print('Сведения о студенте:')
-print(best_student)
-print()
-
-print(lecturer_a < lecturer_b)
-print(lecturer_a > lecturer_b)
-print(lecturer_a == lecturer_b)
-print()
-
-print(lecturer_c)
-print()
-
-print(lecturer_a < lecturer_c)
-print(lecturer_a > lecturer_c)
-print(lecturer_a == lecturer_c)
-print()
-
-print(best_student < another_student)
-print(best_student > another_student)
-print(best_student == another_student)
+# Call overloaded methods to compare instances of classes by their mean grade
+print(student_1 < student_2)
+print(student_1 > student_2)
+print(lecturer_1 == lecturer_2)
+print(lecturer_1 < lecturer_2)
+print(lecturer_1 > lecturer_2)
+print(lecturer_1 == lecturer_2)
