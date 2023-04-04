@@ -107,6 +107,40 @@ class Reviewer(Mentor):
             return 'Ошибка'
 
 
+def mean_students_grade(student_list, course):
+    if not isinstance(student_list, list):
+        print('Error! List of student is needed!')
+        return
+    all_grades = []
+    for student in student_list:
+        if not isinstance(student, Student):
+            print('Each element of student_list should be an instance of Student')
+            continue
+        if course in student.grades.keys():
+            all_grades += student.grades[course]
+    if not len(all_grades):
+        print(f'Students have no grades for course {course}')
+        return
+    return sum(all_grades) / len(all_grades)
+
+
+def mean_lecturers_grade(lecturer_list, course):
+    if not isinstance(lecturer_list, list):
+        print('Error! List of lecturers is needed!')
+        return
+    all_grades = []
+    for lecturer in lecturer_list:
+        if not isinstance(lecturer, Lecturer):
+            print('Each element of lecturer_list should be an instance of Lecturer')
+            continue
+        if course in lecturer.grades.keys():
+            all_grades += lecturer.grades[course]
+    if not len(all_grades):
+        print(f'Lecturers have no grades for course {course}')
+        return
+    return sum(all_grades) / len(all_grades)
+
+
 # Create 2 instances of each class
 
 # Create 2 instances of class Student
@@ -158,6 +192,7 @@ reviewer_1.rate_hw(student_1, 'Python', 10)
 reviewer_1.rate_hw(student_1, 'Python', 10)
 reviewer_1.rate_hw(student_2, 'Python', 10)
 reviewer_1.rate_hw(student_2, 'Python', 9)
+reviewer_1.rate_hw(student_2, 'Python', 9)
 reviewer_2.rate_hw(student_1, 'Git', 10)
 reviewer_2.rate_hw(student_2, 'JavaScript', 10)
 
@@ -179,3 +214,11 @@ print(lecturer_1 == lecturer_2)
 print(lecturer_1 < lecturer_2)
 print(lecturer_1 > lecturer_2)
 print(lecturer_1 == lecturer_2)
+
+# Calculate mean student's grade for course
+course = 'Python'
+print(f'Средняя оценка за домашние задания по всем студентам в рамках курса {course}: {mean_students_grade([student_1, student_2], course)}')
+
+# Calculate mean lecturer's grade for course
+course = 'Python'
+print(f'Средняя оценка за лекции всех лекторов в рамках курса {course}: {mean_lecturers_grade([lecturer_1, lecturer_2], course)}')
