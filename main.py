@@ -21,6 +21,9 @@ class Student:
     
     def _get_avg_grade(self):
         all_grades = [grade for course_grades in self.grades.values() for grade in course_grades]
+        if not len(all_grades):
+            print(f'The student {self.name} {self.surname} has not got any greades yet!')
+            return
         return sum(all_grades) / len(all_grades)
     
     def __str__(self) -> str:
@@ -29,6 +32,24 @@ class Student:
             \nСредняя оценка за домашние задания: {self._get_avg_grade()}\
             \nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\
             \nЗавершенные курсы: {", ".join(self.finished_courses)}'
+    
+    def __lt__ (self, other):
+        if not isinstance(other, Student):
+            print('Not a Student! Only two students can be compared with each other!')
+            return
+        if self._get_avg_grade() is None or other._get_avg_grade() is None:
+            print('Only students with grades can be compared!')
+            return None
+        return self._get_avg_grade() < other._get_avg_grade()
+    
+    def __eq__ (self, other):
+        if not isinstance(other, Student):
+            print('Not a Student! Only two students can be compared with each other!')
+            return
+        if self._get_avg_grade() is None or other._get_avg_grade() is None:
+            print('Only students with grades can be compared!')
+            return None
+        return self._get_avg_grade() == other._get_avg_grade()
 
 
 class Mentor:
@@ -48,10 +69,31 @@ class Lecturer(Mentor):
     
     def _get_avg_grade(self):
         all_grades = [grade for course_grades in self.grades.values() for grade in course_grades]
+        if not len(all_grades):
+            print(f'The lecturer {self.name} {self.surname} has not got any greades yet!')
+            return
         return sum(all_grades) / len(all_grades)
     
     def __str__(self) -> str:
         return (super().__str__() + f'\nСредняя оценка за лекции: {self._get_avg_grade()}')
+    
+    def __lt__ (self, other):
+        if not isinstance(other, Lecturer):
+            print('Not a Lecturer! Only two lecturer can be compared with each other!')
+            return
+        if self._get_avg_grade() is None or other._get_avg_grade() is None:
+            print('Only lecturers with grades can be compared!')
+            return None
+        return self._get_avg_grade() < other._get_avg_grade()
+    
+    def __eq__ (self, other):
+        if not isinstance(other, Lecturer):
+            print('Not a Lecturer! Only two lecturer can be compared with each other!')
+            return
+        if self._get_avg_grade() is None or other._get_avg_grade() is None:
+            print('Only lecturers with grades can be compared!')
+            return None
+        return self._get_avg_grade() == other._get_avg_grade()
 
 
 class Reviewer(Mentor):
@@ -65,7 +107,7 @@ class Reviewer(Mentor):
             return 'Ошибка'
 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
+best_student = Student('Ruoy', 'Eman', 'male')
 best_student.courses_in_progress += ['Python']
 best_student.courses_in_progress += ['Git']
 best_student.finished_courses += ['Введение в программирование']
@@ -85,6 +127,26 @@ lecturer_a.courses_attached += ['Python', 'Git']
 best_student.rate_lecture(lecturer_a, 'Python', 10)
 best_student.rate_lecture(lecturer_a, 'Python', 10)
 
+lecturer_b = Lecturer('Ivan', 'Ivanov')
+lecturer_b.courses_attached += ['Python', 'Введение в программирование']
+
+best_student.rate_lecture(lecturer_b, 'Python', 10)
+best_student.rate_lecture(lecturer_b, 'Python', 9)
+
+lecturer_c = Lecturer('Petr', 'Petrov')
+lecturer_c.courses_attached += ['Python']
+
+best_student.rate_lecture(lecturer_c, 'Python', 10)
+best_student.rate_lecture(lecturer_c, 'Python', 10)
+
+another_student = Student('Jenny', 'Smith', 'female')
+another_student.courses_in_progress += ['Python']
+another_student.finished_courses += ['Введение в программирование']
+
+cool_reviewer.rate_hw(another_student, 'Python', 10)
+cool_reviewer.rate_hw(another_student, 'Python', 9)
+cool_reviewer.rate_hw(another_student, 'Python', 10)
+
 print(lecturer_a.grades)
 print()
 
@@ -98,3 +160,21 @@ print()
 
 print('Сведения о студенте:')
 print(best_student)
+print()
+
+print(lecturer_a < lecturer_b)
+print(lecturer_a > lecturer_b)
+print(lecturer_a == lecturer_b)
+print()
+
+print(lecturer_c)
+print()
+
+print(lecturer_a < lecturer_c)
+print(lecturer_a > lecturer_c)
+print(lecturer_a == lecturer_c)
+print()
+
+print(best_student < another_student)
+print(best_student > another_student)
+print(best_student == another_student)
