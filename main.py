@@ -18,6 +18,17 @@ class Student:
                 lecturer.grades[course] = [grade]
         else:
             return 'Ошибка'
+    
+    def _get_avg_grade(self):
+        all_grades = [grade for course_grades in self.grades.values() for grade in course_grades]
+        return sum(all_grades) / len(all_grades)
+    
+    def __str__(self) -> str:
+        return f'Имя: {self.name}\
+            \nФамилия: {self.surname}\
+            \nСредняя оценка за домашние задания: {self._get_avg_grade()}\
+            \nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\
+            \nЗавершенные курсы: {", ".join(self.finished_courses)}'
 
 
 class Mentor:
@@ -25,12 +36,22 @@ class Mentor:
         self.name = name
         self.surname = surname
         self.courses_attached = []
+    
+    def __str__(self) -> str:
+        return f'Имя: {self.name}\nФамилия: {self.surname}'
 
 
 class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
+    
+    def _get_avg_grade(self):
+        all_grades = [grade for course_grades in self.grades.values() for grade in course_grades]
+        return sum(all_grades) / len(all_grades)
+    
+    def __str__(self) -> str:
+        return (super().__str__() + f'\nСредняя оценка за лекции: {self._get_avg_grade()}')
 
 
 class Reviewer(Mentor):
@@ -46,6 +67,8 @@ class Reviewer(Mentor):
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
+best_student.courses_in_progress += ['Git']
+best_student.finished_courses += ['Введение в программирование']
 
 cool_reviewer = Reviewer('Some', 'Buddy')
 cool_reviewer.courses_attached += ['Python']
@@ -63,3 +86,15 @@ best_student.rate_lecture(lecturer_a, 'Python', 10)
 best_student.rate_lecture(lecturer_a, 'Python', 10)
 
 print(lecturer_a.grades)
+print()
+
+print('Сведения о проверяющем:')
+print(cool_reviewer)
+print()
+
+print('Сведения о лекторе:')
+print(lecturer_a)
+print()
+
+print('Сведения о студенте:')
+print(best_student)
